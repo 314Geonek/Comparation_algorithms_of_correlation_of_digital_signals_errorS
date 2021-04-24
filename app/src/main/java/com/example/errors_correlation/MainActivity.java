@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         codedDataAfterCorrelationTextView = findViewById(R.id.codedDataAfterCorrelationTextView);
         lengthOfGeneratedSeriesNumberPicker = findViewById(R.id.lengthOfGeneratedSeriesNumberPicker);
         lengthOfGeneratedSeriesNumberPicker.setValue(8);
-        String[] values = {"8","16","24"};
+        String[] values = {"8","16","24","28","32","36","40","44","48","52","56","60","64"};
         lengthOfGeneratedSeriesNumberPicker.setDisplayedValues(values);
         //
 //        lengthOfGeneratedSeriesNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
