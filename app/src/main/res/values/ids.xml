@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="methodSelectorSpinner" type="id" />
+    <item name="inputBitsEditText" type="id" />
+    <item name="codedDataTextView" type="id" />
+    <item name="codedDataAfterCorrelationTextView" type="id" />
+    <item name="decodedDataTextView" type="id" />
+</resources>
