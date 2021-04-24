@@ -21,6 +21,25 @@ labels needed
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/encode"
+        android:padding="10dp"/>
+
+    <NumberPicker
+        android:id="@+id/lengthOfGeneratedSeriesNumberPicker"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="generateCode"
+        android:text="Generate example code"
+        android:padding="10dp"/>
     <TextView
         android:id="@+id/codedDataTextView"
         android:layout_width="match_parent"
@@ -36,4 +55,4 @@ labels needed
 
 
 
-</>
+</androidx.appcompat.widget.LinearLayoutCompat>
