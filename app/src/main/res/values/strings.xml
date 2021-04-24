@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Errors_Correlation</string>
     <string name="encode">Encode</string>
+    <string name="reverse_0_bit">Reverse 0 bits</string>
 </resources>

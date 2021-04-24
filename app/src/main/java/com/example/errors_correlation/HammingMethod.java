@@ -8,7 +8,6 @@ public class HammingMethod {
     {
         int inputDataLength = inputData.length;
         int redundancy =0, sum =0;
-        int[] codedData=new int[sum];
         int mask =0;
         for(int i=0;i<inputDataLength;)
         {
@@ -17,6 +16,8 @@ public class HammingMethod {
             else i++;
             sum++;
         }
+        int[] codedData= new int[sum];
+
         type=new int[sum];
         sum = 0;
         redundancy = 0;

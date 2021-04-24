@@ -15,17 +15,19 @@ labels needed
         android:id="@+id/methodSelectorSpinner"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
     <EditText
-        android:layout_margin="10dp"
         android:id="@+id/inputBitsEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:inputType="number" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/encode"
+        android:onClick="encode"
         android:padding="10dp"/>
 
     <NumberPicker
@@ -44,6 +46,21 @@ labels needed
         android:id="@+id/codedDataTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <NumberPicker
+        android:id="@+id/numbersOfBitsToLieNumberPicker"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/lieNBitsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/reverse_0_bit"
+        android:onClick="reverseNBits"
+        android:layout_gravity="center"/>
+
+
     <TextView
         android:id="@+id/codedDataAfterCorrelationTextView"
         android:layout_height="wrap_content"
