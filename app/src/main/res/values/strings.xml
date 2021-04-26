@@ -1,19 +1,24 @@
 <resources>
     <string name="app_name">Algorytmy korelacji błędów</string>
     <string name="encode">Zakoduj</string>
-    <string name="reverse_0_bit">Przekłam 0</string>
+    <string name="reverse_0_bit">Przekłam wybrane bity</string>
     <string name="generate_example_code">Wygeneruj przykładowy kod</string>
     <string name="entercode_info">Wpisz ciąg binarny do zakodowania lub ustaw liczbę bitów i wybierz opcję wygeneruj przykładowy kod.</string>
     <string name="choose_algorithm">Wybierz algorytm kodowania</string>
     <string name="text_after">Ciąg bitów po zakodowaniu</string>
+    <string name="text_after_decode">Ciąg bitów po odkodowaniu</string>
     <string name="reverse_info">Wybierz bity do przekłamania klikając w nie lub ustaw ich liczbę i wybierz opcję przekłam bity.</string>
     <string name="decode">Dekoduj</string>
     <string name="decoding">Dekodowanie</string>
     <string name="summary">Podsumowanie</string>
-    <string name="przeslane_bity_danych">Przesłane bity danych: </string>
-    <string name="przeslane_bity_kontrolne">Przesłane bity kontrolne: </string>
-    <string name="wykryte_bledy">Wykryte błędy: </string>
-    <string name="bledy_skorygowane">Błędy skorygowane: </string>
-    <string name="bledy_niewykryte">Błędy niewykryte: </string>
-    <string name="dekoduj">Dekoduj</string>
+    <string name="data_bits_sent">Przesłane bity danych: </string>
+    <string name="control_bits_sent">Przesłane bity kontrolne: </string>
+    <string name="detected_errors">Wykryte błędy: </string>
+    <string name="corrected_errors">Błędy skorygowane: </string>
+    <string name="undetected_errors">Błędy niewykryte: </string>
+    <string name="authors">Autorzy</string>
+    <string name="l">Łukasz Przychodzień</string>
+    <string name="d">Dominika Radwan</string>
+    <string name="m">Monika Ptasińska</string>
+
 </resources>

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         lengthOfGeneratedSeriesNumberPicker.setDisplayedValues(values);
         ArrayList<String> arrayList = new ArrayList<>();
        // arrayList.add("Hamming");
-        arrayList.add("Parity control");
+        arrayList.add("Kontrola parzystości");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
@@ -150,11 +150,11 @@ public class MainActivity extends AppCompatActivity {
 
             case "Parity control":
                 ParityControl.decode(decodedList);
-                sentControlBitsTextView.setText(getString(R.string.przeslane_bity_kontrolne).concat("1"));
-                sentBitsTextView.setText(getString(R.string.przeslane_bity_danych).concat(Integer.toString(inputBitsList.size())));
-                errorsDetectedTextView.setText(getString(R.string.wykryte_bledy).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
-                fixedErrorsTextView.setText(getString(R.string.bledy_skorygowane).concat("0"));
-                undetectedErrorsTextView.setText(getString(R.string.bledy_niewykryte).concat(findDifferencesCounter(decodedList,inputBitsList)));
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat("1"));
+                sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
+                errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
+                fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat("0"));
+                undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findDifferencesCounter(decodedList,inputBitsList)));
                 break;
             default: break;
         }
