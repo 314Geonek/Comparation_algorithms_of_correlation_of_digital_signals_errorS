@@ -1,6 +1,7 @@
 package com.example.errors_correlation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView decodedDataTextView;
     private NumberPicker numberOfBitsToLieNumberPicker;
     private List<Integer> inputBitsList;
-    private Button lieNBits;
+    private AppCompatButton lieNBits;
     private List<Integer> codedBitsList;
     private NumberPicker lengthOfGeneratedSeriesNumberPicker;
     private TextView codedDataAfterCorrelationTextView;

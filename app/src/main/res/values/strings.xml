@@ -8,4 +8,6 @@
     <string name="text_after">Ciąg bitów po zakodowaniu</string>
     <string name="reverse_info">Wybierz bity do przekłamania klikając w nie lub ustaw ich liczbę i wybierz opcję przekłam bity.</string>
     <string name="decode">Dekoduj</string>
+    <string name="decoding">Dekodowanie</string>
+    <string name="summary">Podsumowanie</string>
 </resources>
