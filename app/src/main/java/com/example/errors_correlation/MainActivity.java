@@ -20,11 +20,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView codedDataTextView;
     private TextView decodedDataTextView;
     private NumberPicker numberOfBitsToLieNumberPicker;
-    private int[] inputBitsArray;
+    private List<Integer> inputBitsList;
     private Button lieNBits;
-    private int[] codedBitsArray;
+    private List<Integer> codedBitsList;
     private NumberPicker lengthOfGeneratedSeriesNumberPicker;
     private TextView codedDataAfterCorrelationTextView;
+    private int sentBits, controlBits, errorsDetected, errorsFixed, errorsUndetected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         lengthOfGeneratedSeriesNumberPicker.setDisplayedValues(values);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Hamming");
-        arrayList.add("ANDROID");
+        arrayList.add("Parity control");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
@@ -64,30 +65,32 @@ public class MainActivity extends AppCompatActivity {
         }
         inputBitsEditText.setText(generatedCode);
     }
-    public void numbersToIntArray()
+    public void numberToIntList()
     {
         String inputText = inputBitsEditText.getText().toString();
-        inputBitsArray = new int[inputText.length()];
+        inputBitsList = new ArrayList<>();
         for(int i=0;i<inputText.length();i++)
-            inputBitsArray[i] = Integer.valueOf(inputText.substring(i,i+1));
-
+            inputBitsList.add(Integer.valueOf(inputText.substring(i,i+1)));
     }
     public void encode(View view) {
-        numbersToIntArray();
-        if(inputBitsArray.length%8!=0 || inputBitsArray.length==0)
+        numberToIntList();
+        if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
             return;
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
-            case "Hamming": codedBitsArray = HammingMethod.encodeHamming(inputBitsArray);
+            case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
             break;
+
+            case "Parity control":
+                ParityControl.encode(inputBitsList);
             //other methods soon
             default: break;
         }
         String output="";
         numberOfBitsToLieNumberPicker.setMinValue(1);
-        numberOfBitsToLieNumberPicker.setMaxValue(codedBitsArray.length);
-        for (int i:codedBitsArray) {
+        numberOfBitsToLieNumberPicker.setMaxValue(codedBitsList.size());
+        for (int i: codedBitsList) {
             output = output.concat(Integer.toString(i));
         }
         codedDataTextView.setText(output);
@@ -95,10 +98,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reverseOneBit(int index)
-    {
-        codedBitsArray[index] = codedBitsArray[index] == 1 ? 0 : 1;
+    {   codedBitsList.set(index, codedBitsList.get(index) == 1 ? 0 : 1);
         String output="";
-        for (int i:codedBitsArray) {
+        for (int i: codedBitsList) {
             output = output.concat(Integer.toString(i));
         }
         codedDataTextView.setText(output);
@@ -106,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reverseNBits(View view) {
-        if(codedBitsArray == null)
+        if(codedBitsList == null)
             return;
-        int max = codedBitsArray.length;
+        int max = codedBitsList.size();
         int numbersOfBitsToReverse = numberOfBitsToLieNumberPicker.getValue();
         List<Integer> listOfBitsToReverse = new ArrayList<>();
         while(true)
