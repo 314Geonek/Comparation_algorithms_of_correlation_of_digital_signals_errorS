@@ -10,4 +10,10 @@
     <string name="decode">Dekoduj</string>
     <string name="decoding">Dekodowanie</string>
     <string name="summary">Podsumowanie</string>
+    <string name="przeslane_bity_danych">Przesłane bity danych: </string>
+    <string name="przeslane_bity_kontrolne">Przesłane bity kontrolne: </string>
+    <string name="wykryte_bledy">Wykryte błędy: </string>
+    <string name="bledy_skorygowane">Błędy skorygowane: </string>
+    <string name="bledy_niewykryte">Błędy niewykryte: </string>
+    <string name="dekoduj">Dekoduj</string>
 </resources>

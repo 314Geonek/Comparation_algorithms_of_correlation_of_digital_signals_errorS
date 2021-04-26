@@ -19,7 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private Spinner methodSelectorSpinner;
     private EditText inputBitsEditText;
     private TextView codedDataTextView;
-    private TextView decodedDataTextView;
+    private TextView sentBitsTextView;
+    private TextView sentControlBitsTextView;
+    private TextView errorsDetectedTextView;
+    private TextView fixedErrorsTextView;
+    private TextView undetectedErrorsTextView;
     private NumberPicker numberOfBitsToLieNumberPicker;
     private List<Integer> inputBitsList;
     private AppCompatButton lieNBits;
@@ -32,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lieNBits = findViewById(R.id.lieNBitsButton);
+        sentBitsTextView = findViewById(R.id.sentBitsTextView);
+        sentControlBitsTextView = findViewById(R.id.sentControlBitsTextView);
+        errorsDetectedTextView = findViewById(R.id.errorsDetectedTextView);
+        fixedErrorsTextView = findViewById(R.id.fixedErrorsTextView);
+        undetectedErrorsTextView = findViewById(R.id.undetectedErrorsTextView);
         methodSelectorSpinner = findViewById(R.id.methodSelectorSpinner);
         inputBitsEditText = findViewById(R.id.inputBitsEditText);
         codedDataTextView = findViewById(R.id.codedDataTextView);
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public void numberToIntList()
     {
         String inputText = inputBitsEditText.getText().toString();
+        sentBits = inputText.length();
         inputBitsList = new ArrayList<>();
         for(int i=0;i<inputText.length();i++)
             inputBitsList.add(Integer.valueOf(inputText.substring(i,i+1)));
@@ -81,11 +91,13 @@ public class MainActivity extends AppCompatActivity {
         switch (encodingMethod)
         {
             case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
-            break;
+                break;
 
             case "Parity control":
                 codedBitsList = ParityControl.encode(inputBitsList);
-            //other methods soon
+                controlBits = ParityControl.getCounterOfControlBits();
+                //other methods soon or no i dont know or i ll have power to do this
+                //other methods soon
             default: break;
         }
         String output="";
@@ -127,5 +139,9 @@ public class MainActivity extends AppCompatActivity {
         listOfBitsToReverse.forEach( i ->{
             reverseOneBit(i);
         });
+    }
+
+    public void decode(View view) {
+
     }
 }

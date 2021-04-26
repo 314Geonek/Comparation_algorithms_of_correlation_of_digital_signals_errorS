@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParityControl {
-    private static int counterOfDetectedDistortions; //czy wykryto błąd
+    private static int counterOfDetectedDistortions; // w kontorli parzystości 1 lub 0
+    private static final int counterOfControlBits = 1;
+    public static int getCounterOfControlBits() {
+        return counterOfControlBits;
+    }
     public static List<Integer> encode(List<Integer> bitsList)
     {
         int sum = bitsList.stream().mapToInt(i -> i).sum();
