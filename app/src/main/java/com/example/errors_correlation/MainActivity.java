@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private NumberPicker numberOfBitsToLieNumberPicker;
     private List<Integer> inputBitsList;
     private AppCompatButton lieNBits;
-    private List<Integer> codedBitsList;
+    private List<Integer> encodedList, decodedList;
     private NumberPicker lengthOfGeneratedSeriesNumberPicker;
     private TextView codedDataAfterCorrelationTextView;
     private int sentBits, controlBits, errorsDetected, errorsFixed, errorsUndetected;
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         numberToIntList();
         if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
             return;
+        encodedList = new ArrayList<>(inputBitsList);
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
@@ -94,16 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case "Parity control":
-                codedBitsList = ParityControl.encode(inputBitsList);
+                ParityControl.encode(encodedList);
                 controlBits = ParityControl.getCounterOfControlBits();
-                //other methods soon or no i dont know or i ll have power to do this
                 //other methods soon
             default: break;
         }
         String output="";
         numberOfBitsToLieNumberPicker.setMinValue(1);
-        numberOfBitsToLieNumberPicker.setMaxValue(codedBitsList.size());
-        for (int i: codedBitsList) {
+        numberOfBitsToLieNumberPicker.setMaxValue(encodedList.size());
+        for (int i: encodedList) {
             output = output.concat(Integer.toString(i));
         }
         codedDataTextView.setText(output);
@@ -111,19 +111,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reverseOneBit(int index)
-    {   codedBitsList.set(index, codedBitsList.get(index) == 1 ? 0 : 1);
+    {   encodedList.set(index, encodedList.get(index) == 1 ? 0 : 1);
         String output="";
-        for (int i: codedBitsList) {
+        for (int i: encodedList) {
             output = output.concat(Integer.toString(i));
         }
         codedDataTextView.setText(output);
-
     }
 
     public void reverseNBits(View view) {
-        if(codedBitsList == null)
+        if(encodedList == null)
             return;
-        int max = codedBitsList.size();
+        int max = encodedList.size();
         int numbersOfBitsToReverse = numberOfBitsToLieNumberPicker.getValue();
         List<Integer> listOfBitsToReverse = new ArrayList<>();
         while(true)
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decode(View view) {
+        decodedList = new ArrayList<>(encodedList);
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case "Parity control":
-                List<Integer> decoded = ParityControl.decode(codedBitsList);
+                ParityControl.decode(decodedList);
                 sentControlBitsTextView.setText(getString(R.string.przeslane_bity_kontrolne).concat("1"));
                 sentBitsTextView.setText(getString(R.string.przeslane_bity_danych).concat(Integer.toString(inputBitsList.size())));
                 errorsDetectedTextView.setText(getString(R.string.wykryte_bledy).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
                 fixedErrorsTextView.setText(getString(R.string.bledy_skorygowane).concat("0"));
-                undetectedErrorsTextView.setText(getString(R.string.bledy_niewykryte).concat(findDifferencesCounter(decoded,inputBitsList)));
+                undetectedErrorsTextView.setText(getString(R.string.bledy_niewykryte).concat(findDifferencesCounter(decodedList,inputBitsList)));
                 break;
             default: break;
         }
