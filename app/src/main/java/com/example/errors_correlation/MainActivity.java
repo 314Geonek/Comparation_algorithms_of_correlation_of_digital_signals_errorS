@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView sentControlBitsTextView;
     private TextView errorsDetectedTextView;
     private TextView fixedErrorsTextView;
+    private TextView decodedDataTextView;
     private TextView undetectedErrorsTextView;
     private NumberPicker numberOfBitsToLieNumberPicker;
     private List<Integer> inputBitsList;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lieNBits = findViewById(R.id.lieNBitsButton);
+        decodedDataTextView = findViewById(R.id.decodedDataTextView);
         sentBitsTextView = findViewById(R.id.sentBitsTextView);
         sentControlBitsTextView = findViewById(R.id.sentControlBitsTextView);
         errorsDetectedTextView = findViewById(R.id.errorsDetectedTextView);
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
                 break;
 
-            case "Parity control":
+            case "Kontrola parzystości":
                 ParityControl.encode(encodedList);
                 controlBits = ParityControl.getCounterOfControlBits();
                 //other methods soon
@@ -148,8 +150,9 @@ public class MainActivity extends AppCompatActivity {
             case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
                 break;
 
-            case "Parity control":
+            case "Kontrola parzystości":
                 ParityControl.decode(decodedList);
+                decodedDataTextView.setText(decodedList.toString());
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat("1"));
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
