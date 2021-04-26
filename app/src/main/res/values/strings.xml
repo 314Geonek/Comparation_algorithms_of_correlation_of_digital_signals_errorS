@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Errors_Correlation</string>
-    <string name="encode">Encode</string>
-    <string name="reverse_0_bit">Reverse 0 bits</string>
+    <string name="app_name">Algorytmy korelacji błędów</string>
+    <string name="encode">Zakoduj</string>
+    <string name="reverse_0_bit">Przekłam 0</string>
+    <string name="generate_example_code">Wygeneruj przykładowy kod</string>
+    <string name="entercode_info">Wpisz ciąg binarny do zakodowania lub ustaw liczbę bitów i wybierz opcję wygeneruj przykładowy kod.</string>
+    <string name="choose_algorithm">Wybierz algorytm kodowania</string>
+    <string name="text_after">Ciąg bitów po zakodowaniu</string>
+    <string name="reverse_info">Wybierz bity do przekłamania klikając w nie lub ustaw ich liczbę i wybierz opcję przekłam bity.</string>
+    <string name="decode">Dekoduj</string>
 </resources>
