@@ -142,6 +142,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decode(View view) {
+        String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
+        switch (encodingMethod)
+        {
+            case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
+                break;
 
+            case "Parity control":
+                List<Integer> decoded = ParityControl.decode(codedBitsList);
+                sentControlBitsTextView.setText(getString(R.string.przeslane_bity_kontrolne).concat("1"));
+                sentBitsTextView.setText(getString(R.string.przeslane_bity_danych).concat(Integer.toString(inputBitsList.size())));
+                errorsDetectedTextView.setText(getString(R.string.wykryte_bledy).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
+                fixedErrorsTextView.setText(getString(R.string.bledy_skorygowane).concat("0"));
+                undetectedErrorsTextView.setText(getString(R.string.bledy_niewykryte).concat(findDifferencesCounter(decoded,inputBitsList)));
+                break;
+            default: break;
+        }
+    }
+    private String findDifferencesCounter(List<Integer> a, List<Integer> b)
+    {   int counter = 0;
+        for(int i=0;i<a.size();i++)
+        {
+            if(!a.get(i).equals(b.get(i)))
+                counter++;
+        }
+        return Integer.toString(counter);
     }
 }
