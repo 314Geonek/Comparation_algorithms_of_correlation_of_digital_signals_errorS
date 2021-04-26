@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         String[] values = {"8","16","24","32","40","48","56","64"};
         lengthOfGeneratedSeriesNumberPicker.setDisplayedValues(values);
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Hamming");
+       // arrayList.add("Hamming");
         arrayList.add("Parity control");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             break;
 
             case "Parity control":
-                ParityControl.encode(inputBitsList);
+                codedBitsList = ParityControl.encode(inputBitsList);
             //other methods soon
             default: break;
         }
