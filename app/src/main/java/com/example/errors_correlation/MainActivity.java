@@ -145,7 +145,9 @@ public class MainActivity extends AppCompatActivity {
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
-            case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
+            case "Hamming":
+                HammingMethod.decodeHamming(encodedList);
+                decodedDataTextView.setText(decodedList.toString());
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(HammingMethod.getCounterOfRedundantBits())));
                 break;
 
@@ -156,12 +158,12 @@ public class MainActivity extends AppCompatActivity {
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
                 fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat("0"));
-                undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findDifferencesCounter(decodedList,inputBitsList)));
+                undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findUndetectedErrorsCounter(decodedList,inputBitsList)));
                 break;
             default: break;
         }
     }
-    private String findDifferencesCounter(List<Integer> a, List<Integer> b)
+    private String findUndetectedErrorsCounter(List<Integer> a, List<Integer> b)
     {   int counter = 0;
         for(int i=0;i<a.size();i++)
         {

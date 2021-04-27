@@ -9,7 +9,6 @@ public class HammingMethod {
     public static int getCounterOfRedundantBits() {
         return counterOfRedundantBits;
     }
-
     private static void findCounterOfRedundantBits(int inputDataLength)
     {   counterOfRedundantBits = 0;
         while (Math.pow(2, counterOfRedundantBits) < (inputDataLength + counterOfRedundantBits + 1)) {
@@ -45,5 +44,13 @@ public class HammingMethod {
         }
     }
 
-
+    public static void decodeHamming(List<Integer> inputList)
+    {
+        Collections.reverse(inputList);
+        inputList.add(0,null);
+        for(int i=counterOfRedundantBits-1;i >= 0;i--)
+        {   inputList.remove( (int) Math.pow(2,i)); }
+        inputList.remove(0);
+        Collections.reverse(inputList);
+    }
 }
