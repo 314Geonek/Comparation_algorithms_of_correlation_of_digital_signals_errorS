@@ -6,7 +6,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         String[] values = {"8","16","24","32","40","48","56","64"};
         lengthOfGeneratedSeriesNumberPicker.setDisplayedValues(values);
         ArrayList<String> arrayList = new ArrayList<>();
-       // arrayList.add("Hamming");
+        arrayList.add("Hamming");
         arrayList.add("Kontrola parzystości");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -87,14 +86,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void encode(View view) {
         numberToIntList();
-        if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
-            return;
+//        if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
+//            return;
         encodedList = new ArrayList<>(inputBitsList);
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
-            case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
-                break;
+            case "Hamming": HammingMethod.calcHuffman(encodedList);
+            controlBits = HammingMethod.getCounterOfRedundantBits();
+            break;
 
             case "Kontrola parzystości":
                 ParityControl.encode(encodedList);
@@ -137,9 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
-        listOfBitsToReverse.forEach( i ->{
-            reverseOneBit(i);
-        });
+        listOfBitsToReverse.forEach(this::reverseOneBit);
     }
 
     public void decode(View view) {
@@ -148,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         switch (encodingMethod)
         {
             case "Hamming":// codedBitsList = HammingMethod.encodeHamming(inputBitsList);
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(HammingMethod.getCounterOfRedundantBits())));
                 break;
 
             case "Kontrola parzystości":
