@@ -368,7 +368,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/abz_regular"
-                android:text="@string/l"
+                android:text="@string/ptasinska"
                 android:textColor="@color/navy_light"
                 android:textSize="14sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>

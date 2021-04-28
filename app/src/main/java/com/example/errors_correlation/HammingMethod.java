@@ -1,11 +1,15 @@
 package com.example.errors_correlation;
 
+import androidx.core.math.MathUtils;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HammingMethod {
 
     private static int counterOfRedundantBits;
+    private static List<Integer> errorList;
     public static int getCounterOfRedundantBits() {
         return counterOfRedundantBits;
     }
@@ -32,12 +36,11 @@ public class HammingMethod {
         {
             if(inputList.get(i)==null)
             {   int value =0;
-                for(int k=i; k<inputList.size(); k+=2*i){
+                for(int k=i; k<inputList.size(); k+=2*i)
                     for(int m=0;m<i && k+m <inputList.size();m++)
-                        if(inputList.get(k+m)!=null) {
+                        if(inputList.get(k+m)!=null)
                             value += inputList.get(k + m);
-                        System.out.println("Do i="+i+" dodaje g="+(k+m) + " o wartosci:"+inputList.get(m+k));}
-                   }
+
                 value = value%2 == 0 ? 0 : 1;
                 inputList.set(i, value);
             }
@@ -48,9 +51,30 @@ public class HammingMethod {
     {
         Collections.reverse(inputList);
         inputList.add(0,null);
+        fixHamming(inputList);
         for(int i=counterOfRedundantBits-1;i >= 0;i--)
         {   inputList.remove( (int) Math.pow(2,i)); }
         inputList.remove(0);
         Collections.reverse(inputList);
+    }
+    private static void fixHamming(List<Integer> inputList)
+    {   List<Integer> redundantBitsIndexes = new ArrayList<>();
+        errorList = new ArrayList<>();
+        for(int i=0;i<counterOfRedundantBits;i++)
+            redundantBitsIndexes.add((int) Math.pow(2,i));
+        redundantBitsIndexes.forEach(redundantBit ->{
+           int counterOfCurrentBit=0;
+            for(int i=redundantBit; i<inputList.size(); i++)
+            {
+                for(int j=0;j<redundantBit;j++)
+                    counterOfCurrentBit += inputList.get(i+j);
+            }
+            if(counterOfCurrentBit % 2 == 1)
+                errorList.add(redundantBit);
+        });
+        int liedBid = errorList.stream().mapToInt(i -> i).sum();
+        if(inputList.get(liedBid)==1)
+            inputList.set(liedBid,0);
+        else inputList.set(liedBid,1);
     }
 }
