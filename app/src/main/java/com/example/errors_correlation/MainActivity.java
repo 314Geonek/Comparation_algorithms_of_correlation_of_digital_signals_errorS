@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Hamming");
         arrayList.add("Kontrola parzystości");
+        arrayList.add("Crc32");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
@@ -101,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
             case "Kontrola parzystości":
                 ParityControl.encode(encodedList);
                 controlBits = ParityControl.getCounterOfControlBits();
-                //other methods soon
+                break;
+            case "Crc32": Crc32.encodeCrc32(encodedList);
+                controlBits = 1;
             default: break;
         }
         String output="";
