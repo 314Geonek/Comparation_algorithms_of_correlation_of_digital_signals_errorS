@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.zip.CRC32;
 
 public class MainActivity extends AppCompatActivity {
     private Spinner methodSelectorSpinner;
@@ -25,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView decodedDataTextView;
     private TextView undetectedErrorsTextView;
     private NumberPicker numberOfBitsToLieNumberPicker;
-    private List<Integer> inputBitsList;
+    private List<Byte> inputBitsList;
     private AppCompatButton lieNBits;
-    private List<Integer> encodedList, decodedList;
+    private List<Byte> encodedList, decodedList;
     private NumberPicker lengthOfGeneratedSeriesNumberPicker;
     private TextView codedDataAfterCorrelationTextView;
     private int sentBits, controlBits, errorsDetected, errorsFixed, errorsUndetected;
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
-
     }
 
     public void generateCode(View view) {
@@ -76,18 +77,19 @@ public class MainActivity extends AppCompatActivity {
         }
         inputBitsEditText.setText(generatedCode);
     }
-    public void numberToIntList()
+    public void numberToByteList()
     {
         String inputText = inputBitsEditText.getText().toString();
         sentBits = inputText.length();
         inputBitsList = new ArrayList<>();
         for(int i=0;i<inputText.length();i++)
-            inputBitsList.add(Integer.valueOf(inputText.substring(i,i+1)));
+            inputBitsList.add(Byte.valueOf(inputText.substring(i,i+1)));
     }
     public void encode(View view) {
-        numberToIntList();
+        numberToByteList();
 //        if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
 //            return;
+
         encodedList = new ArrayList<>(inputBitsList);
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void reverseOneBit(int index)
-    {   encodedList.set(index, encodedList.get(index) == 1 ? 0 : 1);
+    {   encodedList.set(index, (byte) (encodedList.get(index) == 1 ? 0 : 1));
         String output="";
         for (int i: encodedList) {
             output = output.concat(Integer.toString(i));
@@ -146,9 +148,18 @@ public class MainActivity extends AppCompatActivity {
         switch (encodingMethod)
         {
             case "Hamming":
-                HammingMethod.decodeHamming(encodedList);
-                decodedDataTextView.setText(decodedList.toString());
+                HammingMethod.decodeHamming(decodedList);
+                String decodedText = "";
+                for(int i: decodedList)
+                {
+                    decodedText = decodedText.concat(Integer.toString(i));
+                }
+                decodedDataTextView.setText(decodedText);
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(HammingMethod.getCounterOfRedundantBits())));
+                sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
+                errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(HammingMethod.getErrorList().size())));
+                fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat(Integer.toString(HammingMethod.isLiedBid())));
+                undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findUndetectedErrorsCounter(decodedList,inputBitsList)));
                 break;
 
             case "Kontrola parzystości":
@@ -163,8 +174,9 @@ public class MainActivity extends AppCompatActivity {
             default: break;
         }
     }
-    private String findUndetectedErrorsCounter(List<Integer> a, List<Integer> b)
-    {   int counter = 0;
+    private String findUndetectedErrorsCounter(List<Byte> a, List<Byte> b)
+    {
+        int counter = 0;
         for(int i=0;i<a.size();i++)
         {
             if(!a.get(i).equals(b.get(i)))

@@ -9,14 +9,14 @@ public class ParityControl{
     public static int getCounterOfControlBits() {
         return counterOfControlBits;
     }
-    public static void encode(List<Integer> bitsList)
+    public static void encode(List<Byte> bitsList)
     {
         int sum = bitsList.stream().mapToInt(i -> i).sum();
         if(sum % 2 == 0)
-            bitsList.add(0,1);
-        else bitsList.add(0,0);
+            bitsList.add(0, (byte) 1);
+        else bitsList.add(0, (byte) 0);
     }
-    public static void decode(List<Integer> bitsList)
+    public static void decode(List<Byte> bitsList)
     {
         int sum = bitsList.stream().mapToInt(i -> i).sum();
         counterOfDetectedDistortions = sum % 2 == 0 ? 1 : 0;

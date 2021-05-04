@@ -51,7 +51,7 @@
                 android:background="@drawable/input_background"
                 android:elevation="10dp"
                 android:fontFamily="@font/abz_regular"
-                android:inputType="number"
+                android:inputType=""
                 android:padding="16dp"
 
                 android:textColor="@color/blue_dark" />
