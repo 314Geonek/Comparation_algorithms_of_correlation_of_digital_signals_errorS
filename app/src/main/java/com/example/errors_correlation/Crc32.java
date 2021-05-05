@@ -1,5 +1,6 @@
 package com.example.errors_correlation;
 
+
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -49,12 +50,19 @@ public class Crc32 {
             crc = (crc >>> 8) ^ tableCrc32[(crc ^ b) & 0xff];
         }
         crc ^= 0xffffffff;
-        String code= Integer.toBinaryString(crc);
+        String code= Integer.toBinaryString(crc)    ;
+// automatic
+//        byte[] autom = new byte[inputList.size()];
+//        for(int i=0;i<autom.length;i++)
+//            autom[i] = (byte) inputList.get(i);
+//        CRC32 c = new CRC32();
+//        c.update(autom);
+//        System.out.println("Autom = "+ Integer.toBinaryString((int) c.getValue()));
+
         inputList.clear();
         for(int i=0;i<code.length();i++)
             inputList.add(Byte.parseByte(code.substring(i,i+1)));
-
-        System.out.println(inputList.toString());
+        System.out.println("Handm = "+ code);
     }
     //No ja tam nie wiem jak to dziala ale to dziala wiec xD
 }
