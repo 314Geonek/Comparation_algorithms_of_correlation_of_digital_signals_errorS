@@ -63,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Hamming");
         arrayList.add("Kontrola parzystości");
-        arrayList.add("Crc16");
-        arrayList.add("Crc32");
+        arrayList.add("CRC16");
+        arrayList.add("CRC32");
+        arrayList.add("CRC-ITU");
+        arrayList.add("SDLC Reverse");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
@@ -104,11 +106,14 @@ public class MainActivity extends AppCompatActivity {
                 ParityControl.encode(encodedList);
                 controlBits = ParityControl.getCounterOfControlBits();
                 break;
-            case "Crc16": Crc32.encodeCrc32(encodedList);
-                controlBits = 1;
-            case "Crc32": Crc32.encodeCrc32(encodedList);
-                controlBits = 1;
-            default: break;
+            case "CRC16":
+                break;
+            case "CRC32":
+                break;
+            case "CRC-ITU":
+                break;
+            case "SDLC Reverse":
+                break;
         }
         String output="";
         numberOfBitsToLieNumberPicker.setMinValue(1);
