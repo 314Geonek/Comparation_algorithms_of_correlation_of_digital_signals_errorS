@@ -107,12 +107,16 @@ public class MainActivity extends AppCompatActivity {
                 controlBits = ParityControl.getCounterOfControlBits();
                 break;
             case "CRC16":
+                CRC.encode(encodedList,"11000000000000011");
                 break;
             case "CRC32":
+                CRC.encode(encodedList,"100000100110000010001110110110111");
                 break;
             case "CRC-ITU":
+                CRC.encode(encodedList,"10001000000100001");
                 break;
             case "SDLC Reverse":
+                CRC.encode(encodedList,"10000100000010001");
                 break;
         }
         String output="";
@@ -181,6 +185,22 @@ public class MainActivity extends AppCompatActivity {
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
                 fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat("0"));
                 undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findUndetectedErrorsCounter(decodedList,inputBitsList)));
+                break;
+            case "CRC16":
+                CRC.decode(decodedList,"11000000000000011");
+                decodedDataTextView.setText(decodedList.toString());
+                break;
+            case "CRC32":
+                CRC.decode(decodedList,"100000100110000010001110110110111");
+                decodedDataTextView.setText(decodedList.toString());
+                break;
+            case "CRC-ITU":
+                CRC.decode(decodedList,"10001000000100001");
+                decodedDataTextView.setText(decodedList.toString());
+                break;
+            case "SDLC Reverse":
+                CRC.decode(decodedList,"10000100000010001");
+                decodedDataTextView.setText(decodedList.toString());
                 break;
             default: break;
         }
