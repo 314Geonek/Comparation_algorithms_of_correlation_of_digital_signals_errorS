@@ -51,13 +51,13 @@ public class Crc32 {
         }
         crc ^= 0xffffffff;
         String code= Integer.toBinaryString(crc)    ;
-// automatic
-//        byte[] autom = new byte[inputList.size()];
-//        for(int i=0;i<autom.length;i++)
-//            autom[i] = (byte) inputList.get(i);
-//        CRC32 c = new CRC32();
-//        c.update(autom);
-//        System.out.println("Autom = "+ Integer.toBinaryString((int) c.getValue()));
+//automatic
+        byte[] autom = new byte[inputList.size()];
+        for(int i=0;i<autom.length;i++)
+            autom[i] = (byte) inputList.get(i);
+        CRC32 c = new CRC32();
+        c.update(autom);
+        System.out.println("Autom = "+ Integer.toBinaryString((int) c.getValue()));
 
         inputList.clear();
         for(int i=0;i<code.length();i++)
