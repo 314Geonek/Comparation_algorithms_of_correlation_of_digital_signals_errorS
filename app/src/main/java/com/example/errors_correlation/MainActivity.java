@@ -138,26 +138,20 @@ public class MainActivity extends AppCompatActivity {
         numberOfBitsToLieNumberPicker.setMaxValue(encodedList.size());
         for (int i: encodedList) {
             encodedBitListTest.add(new itemList((byte)i));
-            output = output.concat(Integer.toString(i));
         }
-        codedDataTextView.setText(output);
         listItemAdapter.notifyDataSetChanged();
         Log.println(1321,"sda", listItemAdapter.getItemCount() + " ");
     }
 
     private void reverseOneBit(int index)
-    {   encodedList.set(index, (byte) (encodedList.get(index) == 1 ? 0 : 1));
-        String output="";
-        for (int i: encodedList) {
-            output = output.concat(Integer.toString(i));
-        }
-        codedDataTextView.setText(output);
+    {   encodedBitListTest.set(index, new itemList((encodedBitListTest.get(index).bit ==  1 ? (byte) 0 : (byte)1)));
+        listItemAdapter.notifyDataSetChanged();
     }
 
     public void reverseNBits(View view) {
-        if(encodedList == null)
+        if(encodedBitListTest == null)
             return;
-        int max = encodedList.size();
+        int max = encodedBitListTest.size();
         int numbersOfBitsToReverse = numberOfBitsToLieNumberPicker.getValue();
         List<Integer> listOfBitsToReverse = new ArrayList<>();
         while(true)
@@ -174,7 +168,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decode(View view) {
-        decodedList = new ArrayList<>(encodedList);
+        decodedList = new ArrayList<Byte>();
+        encodedBitListTest.forEach(bit ->{
+            decodedList.add(bit.bit);
+        });
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
         switch (encodingMethod)
         {
