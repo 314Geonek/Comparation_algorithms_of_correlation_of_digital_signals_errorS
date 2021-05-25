@@ -2,8 +2,12 @@ package com.example.errors_correlation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,10 +15,11 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.errors_correlation.HorizontalListAdapter.ListItemAdapter;
+import com.example.errors_correlation.HorizontalListAdapter.itemList;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.zip.CRC32;
 
 public class MainActivity extends AppCompatActivity {
     private Spinner methodSelectorSpinner;
@@ -33,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private NumberPicker lengthOfGeneratedSeriesNumberPicker;
     private TextView codedDataAfterCorrelationTextView;
     private int sentBits, controlBits, errorsDetected, errorsFixed, errorsUndetected;
+    private ListItemAdapter listItemAdapter;
+    private RecyclerView recyclerView;
+    private List<itemList> encodedBitListTest = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         methodSelectorSpinner.setAdapter(arrayAdapter);
+        recyclerView = findViewById(R.id.horizontalListRecyclerView);
+        listItemAdapter = new ListItemAdapter(encodedBitListTest, MainActivity.this);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(listItemAdapter);
     }
 
     public void generateCode(View view) {
@@ -89,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<inputText.length();i++)
             inputBitsList.add(Byte.valueOf(inputText.substring(i,i+1)));
     }
+    @SuppressLint("WrongConstant")
     public void encode(View view) {
         numberToByteList();
 //        if(inputBitsList.size() % 8 != 0 || inputBitsList.size() == 0)
@@ -123,10 +137,12 @@ public class MainActivity extends AppCompatActivity {
         numberOfBitsToLieNumberPicker.setMinValue(1);
         numberOfBitsToLieNumberPicker.setMaxValue(encodedList.size());
         for (int i: encodedList) {
+            encodedBitListTest.add(new itemList((byte)i));
             output = output.concat(Integer.toString(i));
         }
         codedDataTextView.setText(output);
-
+        listItemAdapter.notifyDataSetChanged();
+        Log.println(1321,"sda", listItemAdapter.getItemCount() + " ");
     }
 
     private void reverseOneBit(int index)

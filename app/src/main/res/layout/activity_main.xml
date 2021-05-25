@@ -160,7 +160,10 @@
                 android:textColor="@color/blue_dark"
 
                 android:textSize="16sp" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/horizontalListRecyclerView"
+                android:layout_width="400dp"
+                android:layout_height="100dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

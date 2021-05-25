@@ -11,8 +11,7 @@ public class CRC {
     public static void encode(List<Byte> inputList, String polynomial){
         List<Byte> polynomialCrc = numberToByteList(polynomial);
         int crcCount = polynomialCrc.size() - 1;
-        List<Byte> crc = new ArrayList<>();
-        crc.addAll(inputList);
+        List<Byte> crc = new ArrayList<>(inputList);
         for (int i = 0; i < crcCount; i++) {
             crc.add(Byte.valueOf("0"));
         }
