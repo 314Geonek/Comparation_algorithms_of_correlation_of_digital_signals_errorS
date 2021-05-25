@@ -138,13 +138,13 @@ public class MainActivity extends AppCompatActivity {
         encodedBitListTest.clear();
         numberOfBitsToLieNumberPicker.setMaxValue(encodedList.size());
         for (int i: encodedList) {
-            encodedBitListTest.add(new itemList((byte)i, getColor(R.color.lime)));
+            encodedBitListTest.add(new itemList((byte)i, getColor(R.color.blue)));
         }
         listItemAdapter.notifyDataSetChanged();
     }
 
     private void reverseOneBit(int index)
-    {   encodedBitListTest.set(index, new itemList((encodedBitListTest.get(index).bit ==  1 ? (byte) 0 : (byte)1),(encodedBitListTest.get(index).color ==  getColor(R.color.lime) ? getColor(R.color.pink) :getColor( R.color.lime) )));
+    {   encodedBitListTest.set(index, new itemList((encodedBitListTest.get(index).bit ==  1 ? (byte) 0 : (byte)1),(encodedBitListTest.get(index).color ==  getColor(R.color.blue) ? getColor(R.color.pink) :getColor( R.color.blue) )));
         listItemAdapter.notifyItemChanged(index);
     }
 

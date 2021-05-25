@@ -48,7 +48,7 @@ public class  ListItemAdapter extends RecyclerView.Adapter<HorizontalListViewHol
             @Override
             public void onClick(View v) {
                 int number = holder.listItemBtn.getText().equals("1") ? 0 : 1;
-                int color = holder.listItemBtn.getCurrentTextColor() == parseColor("#ffaeea00") ? parseColor("#ffff1744") : parseColor("#ffaeea00");
+                int color = holder.listItemBtn.getCurrentTextColor() == parseColor("#ff00bfa5") ? parseColor("#ffff1744") : parseColor("#ff00bfa5");
                 holder.listItemBtn.setText(String.valueOf(number));
                 horizontalList.set(position, new itemList((byte) number, color));
                 holder.listItemBtn.setTextColor( color);
