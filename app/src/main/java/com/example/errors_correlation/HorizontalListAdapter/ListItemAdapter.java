@@ -28,7 +28,7 @@ public class  ListItemAdapter extends RecyclerView.Adapter<HorizontalListViewHol
         List<itemList> horizontalList;
 
         public ListItemAdapter(List horizontalList, MainActivity mainActivity) {
-        this.horizontalList = horizontalList;
+          this.horizontalList = horizontalList;
         }
 
         @NonNull
@@ -43,14 +43,15 @@ public class  ListItemAdapter extends RecyclerView.Adapter<HorizontalListViewHol
     public void onBindViewHolder(HorizontalListViewHolder holder, int position) {
         itemList data = horizontalList.get(position);
         holder.listItemBtn.setText(data.bit.toString());
+        holder.listItemBtn.setTextColor(data.color);
         holder.listItemBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("WrongConstant")
             @Override
             public void onClick(View v) {
                 int number = holder.listItemBtn.getText().equals("1") ? 0 : 1;
+                int color = holder.listItemBtn.getCurrentTextColor() == parseColor("#ffaeea00") ? parseColor("#ffff1744") : parseColor("#ffaeea00");
                 holder.listItemBtn.setText(String.valueOf(number));
-                horizontalList.set(position, new itemList((byte) number));
-                holder.listItemBtn.setTextColor( holder.listItemBtn.getCurrentTextColor() == parseColor("#ffaeea00")? parseColor("#ffff1744") : parseColor("#ffaeea00"));
+                horizontalList.set(position, new itemList((byte) number, color));
+                holder.listItemBtn.setTextColor( color);
             }
         });
     }
@@ -58,5 +59,6 @@ public class  ListItemAdapter extends RecyclerView.Adapter<HorizontalListViewHol
         public int getItemCount() {
                 return horizontalList.size();
         }
-
+    public List<itemList> getHorizontalList()
+    {return horizontalList;}
 }

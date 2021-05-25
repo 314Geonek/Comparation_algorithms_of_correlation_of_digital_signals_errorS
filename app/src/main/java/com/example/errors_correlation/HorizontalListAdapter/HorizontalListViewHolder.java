@@ -13,6 +13,5 @@ public class HorizontalListViewHolder extends RecyclerView.ViewHolder {
     public HorizontalListViewHolder(View itemView) {
         super(itemView);
         this.listItemBtn = itemView.findViewById(R.id.HorizontalListItemBtn);
-
     }
 }

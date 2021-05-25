@@ -135,17 +135,17 @@ public class MainActivity extends AppCompatActivity {
         }
         String output="";
         numberOfBitsToLieNumberPicker.setMinValue(1);
+        encodedBitListTest.clear();
         numberOfBitsToLieNumberPicker.setMaxValue(encodedList.size());
         for (int i: encodedList) {
-            encodedBitListTest.add(new itemList((byte)i));
+            encodedBitListTest.add(new itemList((byte)i, getColor(R.color.lime)));
         }
         listItemAdapter.notifyDataSetChanged();
-        Log.println(1321,"sda", listItemAdapter.getItemCount() + " ");
     }
 
     private void reverseOneBit(int index)
-    {   encodedBitListTest.set(index, new itemList((encodedBitListTest.get(index).bit ==  1 ? (byte) 0 : (byte)1)));
-        listItemAdapter.notifyDataSetChanged();
+    {   encodedBitListTest.set(index, new itemList((encodedBitListTest.get(index).bit ==  1 ? (byte) 0 : (byte)1),(encodedBitListTest.get(index).color ==  getColor(R.color.lime) ? getColor(R.color.pink) :getColor( R.color.lime) )));
+        listItemAdapter.notifyItemChanged(index);
     }
 
     public void reverseNBits(View view) {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void decode(View view) {
         decodedList = new ArrayList<Byte>();
-        encodedBitListTest.forEach(bit ->{
+        listItemAdapter.getHorizontalList().forEach(bit ->{
             decodedList.add(bit.bit);
         });
         String encodingMethod = methodSelectorSpinner.getSelectedItem().toString();
