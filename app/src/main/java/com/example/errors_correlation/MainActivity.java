@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         numberOfBitsToLieNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                lieNBits.setText("Reverse " + newVal + " bits");
+                lieNBits.setText("Przekłam " + newVal + " bit(ów)");
             }
         });
         String[] values = {"8","16","24","32","40","48","56","64"};
@@ -177,12 +177,7 @@ public class MainActivity extends AppCompatActivity {
         {
             case "Hamming":
                 HammingMethod.decodeHamming(decodedList);
-                String decodedText = "";
-                for(int i: decodedList)
-                {
-                    decodedText = decodedText.concat(Integer.toString(i));
-                }
-                decodedDataTextView.setText(decodedText);
+                decodedDataTextView.setText(byteListToString(decodedList));
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(HammingMethod.getCounterOfRedundantBits())));
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(HammingMethod.getErrorList().size())));
@@ -192,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
             case "Kontrola parzystości":
                 ParityControl.decode(decodedList);
-                decodedDataTextView.setText(decodedList.toString());
+                decodedDataTextView.setText(byteListToString(decodedList));
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat("1"));
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
@@ -201,22 +196,30 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "CRC16":
                 CRC.decode(decodedList,"11000000000000011");
-                decodedDataTextView.setText(decodedList.toString());
+                decodedDataTextView.setText(byteListToString(decodedList));
                 break;
             case "CRC32":
                 CRC.decode(decodedList,"100000100110000010001110110110111");
-                decodedDataTextView.setText(decodedList.toString());
+                decodedDataTextView.setText(byteListToString(decodedList));
                 break;
             case "CRC-ITU":
                 CRC.decode(decodedList,"10001000000100001");
-                decodedDataTextView.setText(decodedList.toString());
+                decodedDataTextView.setText(byteListToString(decodedList));
                 break;
             case "SDLC Reverse":
                 CRC.decode(decodedList,"10000100000010001");
-                decodedDataTextView.setText(decodedList.toString());
+                decodedDataTextView.setText(byteListToString(decodedList));
                 break;
             default: break;
         }
+    }
+    private static String byteListToString(List<Byte> decodedList){
+        String decodedText = "";
+        for(int i: decodedList)
+        {
+            decodedText = decodedText.concat(Integer.toString(i));
+        }
+        return decodedText;
     }
     private String findUndetectedErrorsCounter(List<Byte> a, List<Byte> b)
     {
