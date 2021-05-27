@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView fixedErrorsTextView;
     private TextView decodedDataTextView;
     private TextView undetectedErrorsTextView;
+    private TextView validationLabel;
     private NumberPicker numberOfBitsToLieNumberPicker;
     private List<Byte> inputBitsList;
     private AppCompatButton lieNBits;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         codedDataAfterCorrelationTextView = findViewById(R.id.codedDataAfterCorrelationTextView);
         lengthOfGeneratedSeriesNumberPicker = findViewById(R.id.lengthOfGeneratedSeriesNumberPicker);
         lengthOfGeneratedSeriesNumberPicker.setMinValue(1);
+        validationLabel = findViewById(R.id.validationLabel);
         lengthOfGeneratedSeriesNumberPicker.setMaxValue(8);
         numberOfBitsToLieNumberPicker = findViewById(R.id.numbersOfBitsToLieNumberPicker);
         numberOfBitsToLieNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -180,35 +182,51 @@ public class MainActivity extends AppCompatActivity {
                 decodedDataTextView.setText(byteListToString(decodedList));
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(HammingMethod.getCounterOfRedundantBits())));
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
+                errorsDetectedTextView.setVisibility(View.VISIBLE);
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(HammingMethod.getErrorList().size())));
+                fixedErrorsTextView.setVisibility(View.VISIBLE);
                 fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat(Integer.toString(HammingMethod.isLiedBid())));
+                undetectedErrorsTextView.setVisibility(View.VISIBLE);
+                validationLabel.setVisibility(View.GONE);
                 undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findUndetectedErrorsCounter(decodedList,inputBitsList)));
                 break;
 
             case "Kontrola parzystości":
                 ParityControl.decode(decodedList);
+                validationLabel.setVisibility(View.GONE);
                 decodedDataTextView.setText(byteListToString(decodedList));
                 sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat("1"));
                 sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
+                errorsDetectedTextView.setVisibility(View.VISIBLE);
                 errorsDetectedTextView.setText(getString(R.string.detected_errors).concat(Integer.toString(ParityControl.getCounterOfDetectedDistortions())));
-                fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat("0"));
+                fixedErrorsTextView.setVisibility(View.GONE);
+                //fixedErrorsTextView.setText(getString(R.string.corrected_errors).concat("0"));
+                undetectedErrorsTextView.setVisibility(View.VISIBLE);
                 undetectedErrorsTextView.setText(getString(R.string.undetected_errors).concat(findUndetectedErrorsCounter(decodedList,inputBitsList)));
+
                 break;
             case "CRC16":
                 CRC.decode(decodedList,"11000000000000011");
-                decodedDataTextView.setText(byteListToString(decodedList));
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(16)));
+                setSummary();
                 break;
             case "CRC32":
                 CRC.decode(decodedList,"100000100110000010001110110110111");
                 decodedDataTextView.setText(byteListToString(decodedList));
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(32)));
+                setSummary();
                 break;
             case "CRC-ITU":
                 CRC.decode(decodedList,"10001000000100001");
                 decodedDataTextView.setText(byteListToString(decodedList));
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(16)));
+                setSummary();
                 break;
             case "SDLC Reverse":
                 CRC.decode(decodedList,"10000100000010001");
                 decodedDataTextView.setText(byteListToString(decodedList));
+                sentControlBitsTextView.setText(getString(R.string.control_bits_sent).concat(String.valueOf(16)));
+                setSummary();
                 break;
             default: break;
         }
@@ -221,6 +239,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return decodedText;
     }
+    private void setSummary(){
+        validationLabel.setVisibility(View.VISIBLE);
+        sentBitsTextView.setText(getString(R.string.data_bits_sent).concat(Integer.toString(inputBitsList.size())));
+        if(CRC.isIsTransmissionCorrect()){
+            validationLabel.setText(getString(R.string.validation).concat("Poprawna"));
+        }
+        else {
+            validationLabel.setText(getString(R.string.validation).concat("Niepoprawna"));
+        }
+        decodedDataTextView.setText(byteListToString(decodedList));
+        errorsDetectedTextView.setVisibility(View.GONE);
+        fixedErrorsTextView.setVisibility(View.GONE);
+        undetectedErrorsTextView.setVisibility(View.GONE);
+    }
+
     private String findUndetectedErrorsCounter(List<Byte> a, List<Byte> b)
     {
         int counter = 0;

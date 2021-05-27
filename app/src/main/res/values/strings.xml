@@ -17,6 +17,7 @@
     <string name="corrected_errors">Błędy skorygowane: </string>
     <string name="undetected_errors">Błędy niewykryte: </string>
     <string name="authors">Autorzy</string>
+    <string name="validation">Poprawność transmisji:</string>
     <string name="l">Łukasz Przychodzień</string>
     <string name="d">Dominika Radwan</string>
     <string name="m">Monika Ptasińska</string>

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CRC {
     private static int counterOfControlBits;
+    private static boolean isTransmissionCorrect;
     public static int getCounterOfControlBits() {
         return counterOfControlBits;
     }
@@ -42,6 +43,7 @@ public class CRC {
                 transmission.remove(0);
             }
         }
+        validateCRC(transmission);
     }
     public static List<Byte> numberToByteList(String inputText) {
 
@@ -49,5 +51,15 @@ public class CRC {
         for (int i = 0; i < inputText.length(); i++)
             bitsList.add(Byte.valueOf(inputText.substring(i, i + 1)));
         return bitsList;
+    }
+    public static void validateCRC(List<Byte> transmission){
+        isTransmissionCorrect = true;
+        for (Byte b: transmission) {
+            if(b.equals(Byte.valueOf("1"))) isTransmissionCorrect = false;
+        }
+    }
+
+    public static boolean isIsTransmissionCorrect() {
+        return isTransmissionCorrect;
     }
 }
